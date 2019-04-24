@@ -1,19 +1,21 @@
-#Lab-03 Linear Regression and Minimize cost 
+#시즌2 Lab-03 Linear Regression and How to Minimize cost
 
 import numpy as np   # numpy를 import한다.
 
 X = np.array([1, 2, 3]) # x입력값을 지정한다.
 Y = np.array([1, 2, 3]) # y출력값을 지정한다.
 
-def cost_func(W, X, Y):  #데이터 x,y에 대해 w값이 주어졌을때 cost값을 계산하는 함수
-    c = 0
-    for i in range(len(X)):
-        c += (W * X[i] - Y[i]) ** 2  #우리가 예측한값과 실제값의 차이를 제곱한값을 C에 누적한다.
-    return c / len(X)                #누적한 값을 데이터의 개수로 나눠준다(len(x)). 즉 평균값
+def cost_func(W, X, Y):  # 데이터 x,y에 대해 w값이 주어졌을때 cost값을 계산하는 함수
+  hypothesis = X * W     # hypothesis(예측값)은 x와 w를 곱한 값.
+  return tf.reduce_mean(tf.square(hypothesis - Y)) #예측값-실제값(y)에 제곱을 하고 평균을 낸 값이 cost함수.
 
-for feed_W in np.linspace(-3, 5, num=15): #-3과 5사이를 15번 구간으로 나눠 값을 가진다.
-    curr_cost = cost_func(feed_W, X, Y)   #feed_w값에 따라 바뀌는 cost값의 변화를 저장한다.
-    print("{:6.3f} | {:10.5f}".format(feed_W, curr_cost))
+W_values = np.linspace(-3, 5, num=15) #numpy의 linspace를 이용해서 -3부터 5까지를 15개로 나눈다.
+cost_values = []   #그 나눈값은 리스트로 받는다.
+
+for feed_W in W_values:   #위에서 받은 리스트값을 각각 뽑아낸다.
+    curr_cost = cost_func(feed_W, X, Y)   #뽑아내서 weight값으로 사용한다.
+    cost_values.append(curr_cost)   #feed_w값에 따라 바뀌는 cost값의 변화를 저장하고 출력한다.
+    print("{:6.3f} | {:10.5f}".format(feed_W, curr_cost))   #결과 출력.
     
 #Gradient descent
 tf.set_random_seed(0)  #random_seed를 특정한 값으로 초기화한다.
