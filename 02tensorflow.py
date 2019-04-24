@@ -1,6 +1,6 @@
 #시즌2 Lab-02 Simple Linear Regression LAB
 import tensorflow as tf  #tensorflow를 tf로 불러온다.
-tf.enable_eager_execution() #즉시 실행(eager_execution)모드로 변경해서 사용한다.
+tf.enable_eager_execution() #즉시 실행(eager_execution) 활성화 모드로 변경해서 사용한다.
 
 # Data
 x_data = [1, 2, 3, 4, 5]  # x데이터를 불러온다.(input)
@@ -21,7 +21,7 @@ for i in range(100+1):   #학습을 101번 반복
     W_grad, b_grad = tape.gradient(cost, [W, b])   #cost함수에서 두개의 변수 w,b에 대한 미분값을 각각 나타낸다.
     W.assign_sub(learning_rate * W_grad)  #assign_sub를 이용해서 w값을 업데이트한다.
     b.assign_sub(learning_rate * b_grad)  #assign_sub를 이용해서 b값을 업데이트한다.
-    if i % 10 == 0:   #i가 10의 배수가 될때마다 출력한다.
+    if i % 10 == 0:   # w와 b값의 변화를 보기 위해 i가 10의 배수가 될때마다 출력해 보여준다.
       print("{:5}|{:10.4f}|{:10.4f}|{:10.6f}".format(i, W.numpy(), b.numpy(), cost))
 
-print()
+
