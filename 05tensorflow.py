@@ -10,15 +10,18 @@ b = tf.Variable(tf.zeros([1]), name='bias')     #b(bias)값도 선언해준다.
 def logistic_regression(features):
     hypothesis  = tf.div(1., 1. + tf.exp(tf.matmul(features, W) + b)) #linear한값, wx+b를 sigmoid한 값으로 hypothesis를 지정해준다.
     return hypothesis        #logistic_regression에 관한 hypothesis를 그려낼 수 있다.
-def loss_fn(features, labels):
-    cost = -tf.reduce_mean(labels * tf.log(logistic_regression(features)) + (1 - labels) * tf.log(1 - hypothesis))
-    return cost
-def grad(hypothesis, features, labels):
-    with tf.GradientTape() as tape:
-        loss_value = loss_fn(logistic_regression(features),features,labels)
-    return tape.gradient(loss_value, [W,b])
-optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.01)   
 
+  def loss_fn(features, labels):
+    hypothesis = logistic_regression(features)  #위에서 나온 hypothesis값에 labels를 적용한다.
+    cost = -tf.reduce_mean(labels * tf.log(logistic_regression(features)) + (1 - labels) * tf.log(1 - hypothesis))
+    return cost   #lables과 hypothesis값들을 통해서 우리가 원하는 cost값을 구한다.
+
+  def grad(hypothesis, features, labels):  #hypothesis값과 labels값을 불러온다.
+    with tf.GradientTape() as tape:
+        loss_value = loss_fn(hypothesis,labels)  #hypothesis(가설값)과 lables(실제값)을 비교한 loss값을 구한다.
+    return tape.gradient(loss_value, [W,b])  #gradient를 통해서 실제 모델값을 계속 변화시킨다.
+optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.01)  #GradientDescentOptimizer를 통해서 실제 우리가 이동할 learning_rate 값을
+                                                                   #통해
 for step in range(EPOCHS):
     for features, labels  in tfe.Iterator(dataset):
         grads = grad(logistic_regression(features), features, labels)
