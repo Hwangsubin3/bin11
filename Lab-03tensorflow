@@ -28,10 +28,10 @@ for step in range(300):  #gradient descent부분을 300번 반복한다.
     hypothesis = W * X   #hypothesis는 wx로 정의.
     cost = tf.reduce_mean(tf.square(hypothesis - Y))  #cost값을 차이의 제곱의 평균으로 지정한다.
 
-    alpha = 0.01
+    alpha = 0.01  #alpha=0.01로 지정.
     gradient = tf.reduce_mean(tf.multiply(tf.multiply(W, X) - Y, X))
-    descent = W - tf.multiply(alpha, gradient)
-    W.assign(descent)
+    descent = W - tf.multiply(alpha, gradient)  #gradient와 alpha값을 곱하고 W에서 빼줍니다.
+    W.assign(descent)    #새로운 w값을 W에 할당하며 업데이트 한다.
     
     if step % 10 == 0:  #10번 반복 하면서 cost값과 w값을 출력한다.
         print('{:5} | {:10.4f} | {:10.6f}'.format(
