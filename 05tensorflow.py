@@ -1,4 +1,4 @@
-#Lab-05 Logistic Regression
+#시즌2 Lab-05 Logistic Regression
 
 import tensorflow.contrib.eager as tfe  # 텐서플로우에서 eager모드로 실행하기 위해 import한다.
 tf.enable_eager_execution()   #eager_execution을 선언한다.
